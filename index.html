@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>テスト</title>
+<style>
+  :root {
+    --blue: #0b5ea8;
+    --blue-dark: #084a86;
+    --blue-light: #e8f1fa;
+    --text: #1f2d3d;
+    --muted: #6b7a8c;
+    --line: #d5e0ec;
+    --bg: #f5f8fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  header {
+    background: var(--blue);
+    color: #fff;
+    padding: 20px 28px;
+  }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: 4px 0 0; font-size: 0.9rem; opacity: 0.85; }
+
+  /* ---- CSS-only tabs ---- */
+  .tabs-input { position: absolute; opacity: 0; pointer-events: none; }
+  .tab-labels {
+    display: flex;
+    gap: 4px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 0 20px;
+    overflow-x: auto;
+  }
+  .tab-labels label {
+    padding: 12px 18px;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  .tab-labels label:hover { color: var(--blue); }
+  .panel { display: none; padding: 24px 28px; max-width: 1000px; margin: 0 auto; }
+  #tab-news:checked ~ .tab-labels label[for="tab-news"],
+  #tab-links:checked ~ .tab-labels label[for="tab-links"],
+  #tab-quiz:checked ~ .tab-labels label[for="tab-quiz"] {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+  }
+  #tab-news:checked ~ .panels .panel-news,
+  #tab-links:checked ~ .panels .panel-links,
+  #tab-quiz:checked ~ .panels .panel-quiz { display: block; }
+
+  h2 {
+    font-size: 1.15rem;
+    color: var(--blue-dark);
+    border-left: 5px solid var(--blue);
+    padding-left: 10px;
+    margin: 0 0 16px;
+  }
+
+  /* news list */
+  .news-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .news-meta { font-size: 0.8rem; color: var(--muted); }
+  .tag {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 0.75rem;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 6px;
+  }
+  .news-item h3 { margin: 4px 0; font-size: 1rem; }
+  .news-item p { margin: 0; font-size: 0.9rem; }
+
+  /* link cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    display: block;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: 6px;
+    padding: 16px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .card:hover { box-shadow: 0 4px 12px rgba(11, 94, 168, 0.15); }
+  .card strong { display: block; color: var(--blue-dark); margin-bottom: 4px; }
+  .card span { font-size: 0.85rem; color: var(--muted); }
+
+  /* quiz (CSS-only) */
+  .quiz {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 24px;
+    max-width: 640px;
+  }
+  .quiz-question { font-weight: bold; margin: 0 0 12px; }
+  .quiz-option {
+    display: block;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .quiz-option:hover { background: var(--blue-light); }
+  .quiz input { position: absolute; opacity: 0; pointer-events: none; }
+  .quiz-answer {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--blue-light);
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+  #q1-a:checked ~ .quiz-answer-a,
+  #q1-b:checked ~ .quiz-answer-b,
+  #q1-c:checked ~ .quiz-answer-c { display: block; }
+
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>テスト</h1>
+  <p>お知らせ・よく使うリンクをまとめたページです</p>
+</header>
+
+<!-- タブ切り替え（CSSのみ） -->
+<input class="tabs-input" type="radio" name="tabs" id="tab-news" checked>
+<input class="tabs-input" type="radio" name="tabs" id="tab-links">
+<input class="tabs-input" type="radio" name="tabs" id="tab-quiz">
+
+<div class="tab-labels">
+  <label for="tab-news">お知らせ</label>
+  <label for="tab-links">よく使うリンク</label>
+  <label for="tab-quiz">今日の1問</label>
+</div>
+
+<div class="panels">
+
+  <!-- お知らせ -->
+  <section class="panel panel-news">
+    <h2>お知らせ</h2>
+    <div class="news-item">
+      <div class="news-meta">2026/11/17</div>
+      <h3><span class="tag">重要</span>サンプルのお知らせタイトル</h3>
+      <p>ここにお知らせの概要を入力します。</p>
+    </div>
+    <div class="news-item">
+      <div class="news-meta">2026/11/10</div>
+      <h3><span class="tag">全社</span>サンプルの全社連絡</h3>
+      <p>ここに連絡内容を入力します。</p>
+    </div>
+  </section>
+
+  <!-- よく使うリンク -->
+  <section class="panel panel-links">
+    <h2>よく使うリンク</h2>
+    <div class="cards">
+      <a class="card" href="#"><strong>ファイル共有</strong><span>共有フォルダ</span></a>
+      <a class="card" href="#"><strong>Teams</strong><span>社内コミュニケーション</span></a>
+      <a class="card" href="#"><strong>勤怠・申請</strong><span>各種申請システム</span></a>
+      <a class="card" href="#"><strong>社内規程</strong><span>就業規則・各種ルール</span></a>
+      <a class="card" href="#"><strong>WEBカタログ</strong><span>寝具・商品情報</span></a>
+      <a class="card" href="#"><strong>社内ヘルプ</strong><span>問い合わせ窓口</span></a>
+    </div>
+  </section>
+
+  <!-- 今日の1問 -->
+  <section class="panel panel-quiz">
+    <h2>今日の1問</h2>
+    <div class="quiz">
+      <p class="quiz-question">Q. 当社の創業事業は何でしょう？</p>
+      <input type="radio" name="q1" id="q1-a">
+      <input type="radio" name="q1" id="q1-b">
+      <input type="radio" name="q1" id="q1-c">
+      <label class="quiz-option" for="q1-a">A. 紙おむつ販売</label>
+      <label class="quiz-option" for="q1-b">B. リネン事業</label>
+      <label class="quiz-option" for="q1-c">C. 福祉用具レンタル</label>
+      <div class="quiz-answer quiz-answer-a">残念！ 紙おむつ販売は現在のサービスの一つです。</div>
+      <div class="quiz-answer quiz-answer-b">正解！ リネン業からスタートしました。</div>
+      <div class="quiz-answer quiz-answer-c">残念！ 福祉用具レンタルは在宅サービスの一つです。</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>© テスト</footer>
+
+</body>
+</html>
